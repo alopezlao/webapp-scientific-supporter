@@ -1,0 +1,62 @@
+# Dependencies
+node_modules/
+/.pnp
+.pnp.js
+
+# Testing
+/coverage
+
+# Production
+/build
+/dist
+/.next
+
+# Misc
+.DS_Store
+.env.local
+.env.*.local
+.env.production.local
+*.pem
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*.swn
+*~
+.vim
+
+# OS
+Thumbs.db
+.cache/
+
+# PocketBase
+pb_data/
+pb_backup.tar.gz
+pb_schema.json
+*.pb
+
+# Electron
+dist/
+out/
+
+# Vercel
+.vercel
+.next
+
+# Build outputs
+dist/
+build/
+out/
+
+# Cache
+.turbo/
+.eslintcache

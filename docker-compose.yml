@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  pocketbase:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.pocketbase
+    container_name: research-hub-pocketbase
+    ports:
+      - "8090:8090"
+    volumes:
+      - pb_data:/pb/pb_data
+    environment:
+      POCKETBASE_ENCRYPTION_KEY: ${POCKETBASE_ENCRYPTION_KEY:-}
+    networks:
+      - research-hub
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8090/api/health"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 10s
+
+volumes:
+  pb_data:
+    driver: local
+
+networks:
+  research-hub:
+    driver: bridge

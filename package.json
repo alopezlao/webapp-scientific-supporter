@@ -1,0 +1,49 @@
+{
+  "name": "research-hub",
+  "version": "0.1.0",
+  "description": "Herramienta para investigadores científicos - Web + Desktop App",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
+  "workspaces": [
+    "apps/web",
+    "apps/desktop",
+    "packages/ui-components",
+    "packages/api-client",
+    "packages/utils"
+  ],
+  "scripts": {
+    "dev": "npm run dev -w apps/web",
+    "dev:all": "npm run dev --workspace",
+    "build": "npm run build --workspace",
+    "build:web": "npm run build -w apps/web",
+    "build:desktop": "npm run build -w apps/desktop",
+    "lint": "eslint . --ext .ts,.tsx,.js,.jsx",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "npm run test --workspace",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "docker:logs": "docker-compose logs -f pocketbase",
+    "docker:clean": "docker-compose down -v",
+    "seed": "node scripts/seed-pocketbase.mjs",
+    "precommit": "npm run lint && npm run format:check",
+    "type-check": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^8.57.1",
+    "@typescript-eslint/parser": "^8.57.1",
+    "eslint": "^9.27.0",
+    "eslint-config-next": "^16.1.7",
+    "prettier": "^3.8.1",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "pocketbase": "^0.26.8",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4"
+  }
+}
