@@ -23,6 +23,9 @@ export default [
         },
       },
     },
+    plugins: {
+      '@typescript-eslint': pluginTypeScript,
+    },
     rules: {
       ...js.configs.recommended.rules,
       ...pluginTypeScript.configs.recommended.rules,

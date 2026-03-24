@@ -1,6 +1,3 @@
-// API Client - Research Hub
-// Adaptable para PocketBase (desarrollo) y Supabase (producción)
-
-export { PocketBaseClient } from './pocketbase'
-export type { PBConfig } from './pocketbase'
-export { createClient } from './client'
+export { SupabaseClient } from './supabase'
+export type { AuthUser, SupabaseConfig } from './supabase'
+export { createClient, getClient, resetClient } from './client'

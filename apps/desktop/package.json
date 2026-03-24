@@ -1,36 +1,33 @@
 {
   "name": "@research-hub/desktop",
   "version": "0.1.0",
-  "description": "Research Hub - Desktop Application",
+  "description": "Research Hub - Web Application",
   "private": true,
-  "main": "dist/main.js",
-  "homepage": "./",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development electron-forge start",
-    "build": "electron-forge make",
-    "lint": "eslint src --ext .ts,.tsx",
+    "dev": "npx next dev --port 3000",
+    "build": "npx next build",
+    "start": "npx next start",
+    "lint": "npx next lint",
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
     "@research-hub/api-client": "*",
     "@research-hub/ui-components": "*",
     "@research-hub/utils": "*",
-    "electron-squirrel-startup": "^1.0.1",
-    "pocketbase": "^0.26.8",
+    "next": "^16.1.7",
     "react": "^19.2.4",
     "react-dom": "^19.2.4"
   },
   "devDependencies": {
-    "@electron-forge/cli": "^7.11.1",
-    "@electron-forge/maker-deb": "^7.11.1",
-    "@electron-forge/maker-rpm": "^7.11.1",
-    "@electron-forge/maker-squirrel": "^7.11.1",
-    "@electron-forge/maker-zip": "^7.11.1",
+    "@next/eslint-plugin-next": "^16.1.7",
+    "@tailwindcss/postcss": "^4.2.1",
     "@types/node": "^22.0.0",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
-    "cross-env": "^7.0.3",
-    "electron": "^41.0.3",
+    "eslint": "^9.27.0",
+    "eslint-config-next": "^16.1.7",
+    "postcss": "^8.5.8",
+    "tailwindcss": "^4.2.1",
     "typescript": "^5.9.3"
   }
 }

@@ -1,7 +1,7 @@
 {
   "name": "@research-hub/api-client",
   "version": "0.1.0",
-  "description": "API Client for Research Hub (PocketBase/Supabase)",
+  "description": "API Client for Research Hub (Supabase)",
   "private": true,
   "type": "module",
   "main": "./src/index.ts",
@@ -15,7 +15,7 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "pocketbase": "^0.26.8"
+    "@supabase/supabase-js": "^2.33.0"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",

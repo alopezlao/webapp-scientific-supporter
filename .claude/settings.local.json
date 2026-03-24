@@ -1,0 +1,42 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "Bash(npm install:*)",
+      "Bash(npm view:*)",
+      "Bash(npm run:*)",
+      "Bash(docker --version)",
+      "Bash(docker-compose --version)",
+      "Bash(docker-compose ps:*)",
+      "Bash(npm ls:*)",
+      "Bash(npm --version)",
+      "Bash(npx tsc:*)",
+      "Bash(netstat -ano)",
+      "Bash(curl -s http://localhost:3000)",
+      "Bash(curl -s http://localhost:8090/api/collections)",
+      "Bash(jq .items[].name)",
+      "Bash(node scripts/setup-database.mjs)",
+      "Bash(curl -s http://localhost:8090/api/admins)",
+      "Bash(curl -s -X POST http://localhost:8090/api/admins/auth-with-password -H \"Content-Type: application/json\" -d '{\"\"\"\"identity\"\"\"\":\"\"\"\"alopezlao@gmail.com\"\"\"\",\"\"\"\"password\"\"\"\":\"\"\"\"nebulanebula\"\"\"\"}')",
+      "Bash(curl:*)",
+      "Bash(node scripts/create-collections.mjs)",
+      "Bash(node scripts/seed-data.mjs)",
+      "Bash(POCKETBASE_ADMIN_EMAIL=\"alopezlao@gmail.com\" POCKETBASE_ADMIN_PASSWORD=\"nebulanebula\" node scripts/update-collection-rules.mjs)",
+      "Bash(jq .items[0])",
+      "Bash(POCKETBASE_ADMIN_EMAIL=\"alopezlao@gmail.com\" POCKETBASE_ADMIN_PASSWORD=\"nebulanebula\" node scripts/seed-data.mjs)",
+      "Bash(python3 -c \"import sys, json; data = json.load\\(sys.stdin\\); print\\(json.dumps\\(data[''''items''''][0], indent=2\\)\\)\")",
+      "Bash(python3 -c \"import sys, json; data = json.load\\(sys.stdin\\); print\\(json.dumps\\([f[''''name''''] for f in data.get\\(''''schema'''', []\\)], indent=2\\)\\)\")",
+      "Bash(POCKETBASE_ADMIN_EMAIL=\"alopezlao@gmail.com\" POCKETBASE_ADMIN_PASSWORD=\"nebulanebula\" node scripts/create-collections.mjs)",
+      "Bash(python3 -c \"import sys, json; data = json.load\\(sys.stdin\\); r = data[''''items''''][0]; print\\(f''''Fields: {list\\(r.keys\\(\\)\\)}''''\\); print\\(f''''Title: {r.get\\(\"\"title\"\"\\)}''''\\); print\\(f''''Description: {r.get\\(\"\"description\"\", \"\"N/A\"\"\\)}''''\\)\")",
+      "Bash(mv page.tsx \"\\(dashboard\\)/page.tsx\")",
+      "Bash(mv projects/page.tsx \"\\(dashboard\\)/projects/page.tsx\")",
+      "Bash(mv datasets/page.tsx \"\\(dashboard\\)/datasets/page.tsx\")",
+      "Bash(mv notes/page.tsx \"\\(dashboard\\)/notes/page.tsx\")",
+      "Bash(mv publications/page.tsx \"\\(dashboard\\)/publications/page.tsx\")",
+      "Bash(rm:*)",
+      "WebFetch(domain:localhost)",
+      "Bash(taskkill //F //IM node.exe)",
+      "WebFetch(domain:172.20.41.92)"
+    ]
+  }
+}
