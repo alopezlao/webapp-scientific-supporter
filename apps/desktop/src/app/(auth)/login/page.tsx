@@ -6,11 +6,12 @@ import Link from 'next/link'
 import { useAuth } from '@/contexts/AuthContext'
 
 export default function LoginPage() {
-  const { login, error } = useAuth()
+  const { login, loginWithGoogle, error } = useAuth()
   const router = useRouter()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
+  const [googleLoading, setGoogleLoading] = useState(false)
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -22,6 +23,18 @@ export default function LoginPage() {
       // error set in context
     } finally {
       setLoading(false)
+    }
+  }
+
+  async function handleGoogleLogin() {
+    setGoogleLoading(true)
+    try {
+      await loginWithGoogle()
+      router.replace('/')
+    } catch {
+      // error set in context
+    } finally {
+      setGoogleLoading(false)
     }
   }
 
@@ -89,6 +102,21 @@ export default function LoginPage() {
           )}
         </button>
       </form>
+
+      <div className="my-5 flex items-center gap-3">
+        <div className="h-px flex-1 bg-white/[0.08]" />
+        <span className="text-xs text-zinc-500">o</span>
+        <div className="h-px flex-1 bg-white/[0.08]" />
+      </div>
+
+      <button
+        type="button"
+        onClick={handleGoogleLogin}
+        disabled={googleLoading}
+        className="w-full rounded-lg border border-white/[0.12] bg-white/[0.02] px-4 py-3 text-sm font-semibold text-white transition-all duration-200 hover:bg-white/[0.06] disabled:opacity-50"
+      >
+        {googleLoading ? 'Conectando con Google...' : 'Continuar con Google'}
+      </button>
 
       <p className="mt-6 text-center text-sm text-zinc-500">
         No tienes cuenta?{' '}

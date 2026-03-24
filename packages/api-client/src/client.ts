@@ -1,14 +1,12 @@
-import { SupabaseClient, createSupabaseClientWrapper } from './supabase'
+import { LocalClient, createLocalClient } from './local'
 
-export function createClient(): SupabaseClient {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL || 'http://localhost:54321'
-  const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
-  return createSupabaseClientWrapper(url, anonKey)
+export function createClient(): LocalClient {
+  return createLocalClient()
 }
 
-let client: SupabaseClient | null = null
+let client: LocalClient | null = null
 
-export function getClient(): SupabaseClient {
+export function getClient(): LocalClient {
   if (!client) {
     client = createClient()
   }

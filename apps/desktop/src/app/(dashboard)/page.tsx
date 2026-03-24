@@ -163,7 +163,7 @@ export default function Home() {
       <div className="mt-4 flex items-center gap-4 rounded-xl border border-slate-200/60 bg-white/60 px-5 py-3">
         <span className="text-xs font-medium text-slate-400">Stack</span>
         <div className="flex items-center gap-2">
-          {['Next.js', 'Supabase', 'Electron', 'Tailwind'].map((tech) => (
+          {['Next.js', 'SQLite', 'Electron', 'Tailwind'].map((tech) => (
             <span
               key={tech}
               className="rounded-full bg-slate-100 px-2.5 py-0.5 text-[11px] font-medium text-slate-500"

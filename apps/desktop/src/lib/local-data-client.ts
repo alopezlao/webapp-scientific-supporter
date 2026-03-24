@@ -23,3 +23,4 @@ export async function getPublications() {
   const result = await client.getList('publications')
   return result.items
 }
+

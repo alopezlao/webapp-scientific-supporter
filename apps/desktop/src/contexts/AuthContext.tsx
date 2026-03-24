@@ -4,6 +4,7 @@ import { createContext, useContext, useEffect, useState, useCallback } from 'rea
 import type { ReactNode } from 'react'
 import { getClient } from '@research-hub/api-client'
 import type { AuthUser } from '@research-hub/api-client'
+import { clearAuthSession, setAuthSession } from '@/app/auth-actions'
 
 interface AuthContextValue {
   user: AuthUser | null
@@ -11,20 +12,12 @@ interface AuthContextValue {
   isLoading: boolean
   error: string | null
   login: (email: string, password: string) => Promise<void>
+  loginWithGoogle: () => Promise<void>
   signup: (email: string, password: string, name?: string) => Promise<void>
-  logout: () => void
+  logout: () => Promise<void>
 }
 
 const AuthContext = createContext<AuthContextValue | null>(null)
-
-function setAuthCookie(active: boolean) {
-  if (typeof document === 'undefined') return
-  if (active) {
-    document.cookie = 'sb_auth=1; path=/; SameSite=Lax'
-  } else {
-    document.cookie = 'sb_auth=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT'
-  }
-}
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<AuthUser | null>(null)
@@ -38,9 +31,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (client.isAuthenticated()) {
       const currentUser = client.getCurrentUser() as AuthUser | null
       setUser(currentUser)
-      setAuthCookie(true)
+      if (currentUser) {
+        void setAuthSession({
+          id: currentUser.id,
+          email: currentUser.email,
+          name: currentUser.name,
+        })
+      }
     } else {
-      setAuthCookie(false)
+      void clearAuthSession()
     }
     setIsLoading(false)
 
@@ -48,10 +47,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const unsubscribe = client.onAuthChange((token, record) => {
       if (token && record) {
         setUser(record)
-        setAuthCookie(true)
+        void setAuthSession({
+          id: record.id,
+          email: record.email,
+          name: record.name,
+        })
       } else {
         setUser(null)
-        setAuthCookie(false)
+        void clearAuthSession()
       }
     })
 
@@ -63,6 +66,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     try {
       const client = getClient()
       await client.login(email, password)
+      const currentUser = client.getCurrentUser()
+      if (currentUser) {
+        await setAuthSession({
+          id: currentUser.id,
+          email: currentUser.email,
+          name: currentUser.name,
+        })
+      }
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Error al iniciar sesion'
       setError(message)
@@ -75,6 +86,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     try {
       const client = getClient()
       await client.signup(email, password, name ? { name } : undefined)
+      const currentUser = client.getCurrentUser()
+      if (currentUser) {
+        await setAuthSession({
+          id: currentUser.id,
+          email: currentUser.email,
+          name: currentUser.name,
+        })
+      }
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Error al crear cuenta'
       setError(message)
@@ -82,11 +101,31 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }, [])
 
-  const logout = useCallback(() => {
+  const loginWithGoogle = useCallback(async () => {
+    setError(null)
+    try {
+      const client = getClient()
+      await client.loginWithGoogle()
+      const currentUser = client.getCurrentUser()
+      if (currentUser) {
+        await setAuthSession({
+          id: currentUser.id,
+          email: currentUser.email,
+          name: currentUser.name,
+        })
+      }
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'Error al iniciar con Google'
+      setError(message)
+      throw err
+    }
+  }, [])
+
+  const logout = useCallback(async () => {
     const client = getClient()
-    client.logout()
+    await client.logout()
+    await clearAuthSession()
     setUser(null)
-    setAuthCookie(false)
   }, [])
 
   return (
@@ -97,6 +136,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         isLoading,
         error,
         login,
+        loginWithGoogle,
         signup,
         logout,
       }}

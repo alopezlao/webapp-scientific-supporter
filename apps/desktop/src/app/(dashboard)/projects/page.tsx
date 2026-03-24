@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { getProjects } from '@/lib/supabase-client'
+import { getProjects } from '@/lib/local-data-client'
 import { DataTable } from '@/components/DataTable'
 import { PageShell } from '@/components/PageShell'
 import { FlaskIcon } from '@/components/Icons'
@@ -14,7 +14,7 @@ export default function ProjectsPage() {
   useEffect(() => {
     getProjects()
       .then(setProjects)
-      .catch((err) => setError(err instanceof Error ? err.message : 'Error al cargar'))
+      .catch((err: unknown) => setError(err instanceof Error ? err.message : 'Error al cargar'))
       .finally(() => setLoading(false))
   }, [])
 
@@ -34,12 +34,12 @@ export default function ProjectsPage() {
           {
             key: 'title',
             label: 'Titulo',
-            render: (title) => <span className="font-medium text-zinc-800">{title}</span>,
+            render: (title: string) => <span className="font-medium text-zinc-800">{title}</span>,
           },
           {
             key: 'description',
             label: 'Descripcion',
-            render: (desc) => desc
+            render: (desc: string | null) => desc
               ? <span className="line-clamp-1 max-w-[280px] text-zinc-500">{desc}</span>
               : <span className="text-zinc-300">--</span>,
           },
@@ -47,13 +47,13 @@ export default function ProjectsPage() {
             key: 'status',
             label: 'Estado',
             width: '100px',
-            render: (status) => {
+            render: (status: string | null) => {
               const cfg: Record<string, { bg: string; text: string; label: string }> = {
                 active: { bg: 'bg-emerald-500/10', text: 'text-emerald-600', label: 'Activo' },
                 completed: { bg: 'bg-sky-500/10', text: 'text-sky-600', label: 'Completado' },
                 archived: { bg: 'bg-zinc-500/10', text: 'text-zinc-500', label: 'Archivado' },
               }
-              const c = cfg[status] || { bg: 'bg-zinc-100', text: 'text-zinc-500', label: status || '--' }
+              const c = cfg[status ?? ''] || { bg: 'bg-zinc-100', text: 'text-zinc-500', label: status || '--' }
               return (
                 <span className={`inline-flex items-center gap-1.5 rounded-full px-2 py-0.5 text-[11px] font-medium ${c.bg} ${c.text}`}>
                   <span className={`h-1 w-1 rounded-full ${c.text.replace('text-', 'bg-')}`} />
@@ -66,7 +66,7 @@ export default function ProjectsPage() {
             key: 'start_date',
             label: 'Inicio',
             width: '110px',
-            render: (date) => date
+            render: (date: string | null) => date
               ? <span className="tabular-nums text-zinc-500">{new Date(date).toLocaleDateString('es-ES', { year: 'numeric', month: 'short', day: 'numeric' })}</span>
               : <span className="text-zinc-300">--</span>,
           },
@@ -74,7 +74,7 @@ export default function ProjectsPage() {
             key: 'end_date',
             label: 'Fin',
             width: '110px',
-            render: (date) => date
+            render: (date: string | null) => date
               ? <span className="tabular-nums text-zinc-500">{new Date(date).toLocaleDateString('es-ES', { year: 'numeric', month: 'short', day: 'numeric' })}</span>
               : <span className="text-zinc-300">--</span>,
           },

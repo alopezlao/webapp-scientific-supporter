@@ -20,12 +20,12 @@
     "build:client": "npm run build -w apps/desktop",
     "desktop:dev": "concurrently \"npm run dev -w apps/desktop\" \"wait-on http://localhost:3000 && electron electron/main.cjs\"",
     "desktop:build": "npm run build:client && electron-builder",
-    "lint": "eslint . --ext .ts,.tsx,.js,.jsx",
+    "lint": "eslint apps packages electron --ext .ts,.tsx,.js,.jsx,.cjs",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "test": "npm run test --workspace",
+    "test": "npm run test --workspaces --if-present",
     "precommit": "npm run lint && npm run format:check",
-    "type-check": "tsc --noEmit"
+    "type-check": "npm run type-check -w apps/desktop && npm run type-check -w @research-hub/api-client && npm run type-check -w @research-hub/utils && npm run type-check -w @research-hub/ui-components"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^8.57.1",
@@ -33,13 +33,15 @@
     "concurrently": "^8.2.0",
     "electron": "^26.0.0",
     "electron-builder": "^24.3.0",
-    "wait-on": "^7.0.1",
     "eslint": "^10.0.3",
     "eslint-config-next": "^16.1.7",
     "prettier": "^3.8.1",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "wait-on": "^7.0.1"
   },
   "dependencies": {
+    "better-sqlite3": "^12.8.0",
+    "googleapis": "^171.4.0",
     "react": "^19.2.4",
     "react-dom": "^19.2.4"
   }

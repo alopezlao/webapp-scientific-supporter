@@ -5,7 +5,16 @@ import pluginTypeScript from '@typescript-eslint/eslint-plugin'
 
 export default [
   {
-    ignores: ['node_modules', 'dist', '.next', 'pb_data'],
+    ignores: [
+      'node_modules',
+      'dist',
+      '.next',
+      'pb_data',
+      '.claude',
+      '.cursor',
+      'apps/**/.next',
+      'apps/**/out',
+    ],
   },
   {
     files: ['**/*.{js,jsx,ts,tsx}'],
@@ -29,6 +38,7 @@ export default [
     rules: {
       ...js.configs.recommended.rules,
       ...pluginTypeScript.configs.recommended.rules,
+      'no-undef': 'off',
       'no-console': ['warn', { allow: ['warn', 'error'] }],
       '@typescript-eslint/no-unused-vars': [
         'error',
@@ -45,6 +55,16 @@ export default [
     files: ['**/*.config.js', '**/*.config.ts'],
     languageOptions: {
       globals: globals.node,
+    },
+  },
+  {
+    files: ['**/*.cjs'],
+    languageOptions: {
+      sourceType: 'commonjs',
+      globals: globals.node,
+    },
+    rules: {
+      '@typescript-eslint/no-require-imports': 'off',
     },
   },
 ]

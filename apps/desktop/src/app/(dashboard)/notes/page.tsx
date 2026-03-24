@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { getNotes } from '@/lib/supabase-client'
+import { getNotes } from '@/lib/local-data-client'
 import { DataTable } from '@/components/DataTable'
 import { PageShell } from '@/components/PageShell'
 import { FileTextIcon } from '@/components/Icons'
@@ -14,7 +14,7 @@ export default function NotesPage() {
   useEffect(() => {
     getNotes()
       .then(setNotes)
-      .catch((err) => setError(err instanceof Error ? err.message : 'Error al cargar'))
+      .catch((err: unknown) => setError(err instanceof Error ? err.message : 'Error al cargar'))
       .finally(() => setLoading(false))
   }, [])
 
@@ -34,19 +34,19 @@ export default function NotesPage() {
           {
             key: 'title',
             label: 'Titulo',
-            render: (title) => <span className="font-medium text-zinc-800">{title}</span>,
+            render: (title: string) => <span className="font-medium text-zinc-800">{title}</span>,
           },
           {
             key: 'content',
             label: 'Contenido',
-            render: (content) => content
+            render: (content: string | null) => content
               ? <span className="line-clamp-1 max-w-[320px] text-zinc-500">{content}</span>
               : <span className="text-zinc-300">--</span>,
           },
           {
             key: 'tags',
             label: 'Etiquetas',
-            render: (tags) => {
+            render: (tags: string[] | string | null) => {
               if (!tags) return <span className="text-zinc-300">--</span>
               try {
                 const arr = typeof tags === 'string' ? JSON.parse(tags) : tags

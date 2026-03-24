@@ -14,7 +14,7 @@ Archivo de configuración de preferencias para el asistente Claude en este proye
 - Aplicación de Escritorio Multiplataforma
 - Empaquetado: **Electron** + **Electron Builder**
 - Frontend: **Next.js 14+** (React 18+, TypeScript, Tailwind CSS)
-- Backend y BD: **Supabase** (PostgreSQL) local con Docker o CLI
+- Backend y BD: **Local embebido** (Electron + SQLite)
 - Integración nativa entre el UI y Electron via contextBridge
 
 ### Monorepo
@@ -42,5 +42,5 @@ Archivo de configuración de preferencias para el asistente Claude en este proye
 ## 🚀 Próximas Acciones
 
 1. Desarrollar la integración IPC entre Electron y Next.js
-2. Desarrollar modelo de datos en Supabase Local
-3. Construir la UI principal de la aplicación
+2. Desarrollar modelo de datos local en SQLite
+3. Implementar integración de Google OAuth + Google Drive (lectura/escritura)

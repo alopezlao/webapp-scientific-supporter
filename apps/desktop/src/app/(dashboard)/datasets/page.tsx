@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { getDatasets } from '@/lib/supabase-client'
+import { getDatasets } from '@/lib/local-data-client'
 import { DataTable } from '@/components/DataTable'
 import { PageShell } from '@/components/PageShell'
 import { DatabaseIcon, ExternalLinkIcon } from '@/components/Icons'
@@ -14,7 +14,7 @@ export default function DatasetsPage() {
   useEffect(() => {
     getDatasets()
       .then(setDatasets)
-      .catch((err) => setError(err instanceof Error ? err.message : 'Error al cargar'))
+      .catch((err: unknown) => setError(err instanceof Error ? err.message : 'Error al cargar'))
       .finally(() => setLoading(false))
   }, [])
 
@@ -34,12 +34,12 @@ export default function DatasetsPage() {
           {
             key: 'name',
             label: 'Nombre',
-            render: (name) => <span className="font-medium text-zinc-800">{name}</span>,
+            render: (name: string) => <span className="font-medium text-zinc-800">{name}</span>,
           },
           {
             key: 'description',
             label: 'Descripcion',
-            render: (desc) => desc
+            render: (desc: string | null) => desc
               ? <span className="line-clamp-1 max-w-[240px] text-zinc-500">{desc}</span>
               : <span className="text-zinc-300">--</span>,
           },
@@ -47,15 +47,16 @@ export default function DatasetsPage() {
             key: 'data_type',
             label: 'Tipo',
             width: '80px',
-            render: (type) => {
+            render: (type: string | null) => {
               const colors: Record<string, string> = {
                 csv: 'bg-blue-500/10 text-blue-600',
                 json: 'bg-amber-500/10 text-amber-600',
                 raw_data: 'bg-purple-500/10 text-purple-600',
                 image: 'bg-pink-500/10 text-pink-600',
               }
+              const typeKey = type ?? ''
               return (
-                <span className={`inline-flex rounded px-1.5 py-0.5 text-[11px] font-mono font-medium uppercase ${colors[type] || 'bg-zinc-100 text-zinc-500'}`}>
+                <span className={`inline-flex rounded px-1.5 py-0.5 text-[11px] font-mono font-medium uppercase ${colors[typeKey] || 'bg-zinc-100 text-zinc-500'}`}>
                   {type || '--'}
                 </span>
               )
@@ -65,7 +66,7 @@ export default function DatasetsPage() {
             key: 'file_size',
             label: 'Tamano',
             width: '80px',
-            render: (size) => {
+            render: (size: number | null) => {
               if (!size) return <span className="text-zinc-300">--</span>
               const formatted = size >= 1048576 ? `${(size / 1048576).toFixed(1)} MB` : `${(size / 1024).toFixed(1)} KB`
               return <span className="font-mono text-[12px] tabular-nums text-zinc-500">{formatted}</span>
@@ -75,7 +76,7 @@ export default function DatasetsPage() {
             key: 'file_url',
             label: '',
             width: '60px',
-            render: (url) => url
+            render: (url: string | null) => url
               ? <a href={url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-[12px] font-medium text-indigo-500 hover:text-indigo-400"><ExternalLinkIcon className="h-3 w-3" />Abrir</a>
               : <span className="text-zinc-300">--</span>,
           },

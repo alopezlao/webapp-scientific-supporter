@@ -25,7 +25,7 @@ export function Sidebar() {
   const { user, logout } = useAuth()
 
   const initials = user?.name
-    ? user.name.split(' ').map((w) => w[0]).join('').toUpperCase().slice(0, 2)
+    ? user.name.split(' ').map((w: string) => w[0]).join('').toUpperCase().slice(0, 2)
     : user?.email?.slice(0, 2).toUpperCase() ?? '??'
 
   return (
@@ -87,7 +87,7 @@ export function Sidebar() {
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
             <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
           </span>
-          <span className="text-xs text-zinc-500">Supabase</span>
+          <span className="text-xs text-zinc-500">SQLite local</span>
           <span className="text-xs font-medium text-emerald-400">Conectado</span>
         </div>
       </div>
